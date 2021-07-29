@@ -4,17 +4,16 @@
 # and, if needed, shared apisecret and/or token authentication mechanism
 # between application(s) and Janus.
 general: {
-	configs_folder = "/opt/janus/etc/janus"			# Configuration files folder
-	plugins_folder = "/opt/janus/lib/janus/plugins"			# Plugins folder
-	transports_folder = "/opt/janus/lib/janus/transports"	# Transports folder
-	events_folder = "/opt/janus/lib/janus/events"			# Event handlers folder
-	loggers_folder = "/opt/janus/lib/janus/loggers"			# External loggers folder
+	configs_folder = "{{ janus_conf_dir }}"			# Configuration files folder
+	plugins_folder = "{{ janus_conf_var['janus.jcfg']['plugins_folder'] }}"			# Plugins folder
+	transports_folder = "{{ janus_conf_var['janus.jcfg']['transports_folder'] }}"	# Transports folder
+	events_folder = "{{ janus_conf_var['janus.jcfg']['events_folder'] }}"			# Event handlers folder
+	loggers_folder = "{{ janus_conf_var['janus.jcfg']['loggers_folder'] }}"		# External loggers folder
 
-		# The next settings configure logging
-	#log_to_stdout = false					# Whether the Janus output should be written
+	log_to_stdout = "{{ janus_conf_var['janus.jcfg']['log_to_stdout'] }}"					# Whether the Janus output should be written
 											# to stdout or not (default=true)
 	#log_to_file = "/path/to/janus.log"		# Whether to use a log file or not
-	debug_level = 4							# Debug/logging level, valid values are 0-7
+	debug_level = "{{ janus_conf_var['janus.jcfg']['debug_level'] }}"							# Debug/logging level, valid values are 0-7
 	#debug_timestamps = true				# Whether to show a timestamp for each log line
 	#debug_colors = false					# Whether colors should be disabled in the log
 	#debug_locks = true						# Whether to enable debugging of locks (very verbose!)
@@ -27,27 +26,32 @@ general: {
 		# This is what you configure if you want to launch Janus as a daemon
 	#daemonize = true						# Whether Janus should run as a daemon
 											# or not (default=run in foreground)
-	#pid_file = "/path/to/janus.pid"		# PID file to create when Janus has been
-											# started, and to destroy at shutdown
+	#pid_file = "{{ janus_conf_var['janus.jcfg']['pid_file'] }}"		
+    # PID file to create when Janus has been
+	# started, and to destroy at shutdown
 
 		# There are different ways you can authenticate the Janus and Admin APIs
-	#api_secret = "janusrocks"		# String that all Janus requests must contain
+	#api_secret = "{{ janus_conf_var['janus.jcfg']['api_secret'] }}"
+                                    # String that all Janus requests must contain
 									# to be accepted/authorized by the Janus core.
 									# Useful if you're wrapping all Janus API requests
 									# in your servers (that is, not in the browser,
 									# where you do the things your way) and you
 									# don't want other application to mess with
 									# this Janus instance.
-	#token_auth = true				# Enable a token based authentication
+	token_auth = "{{ janus_conf_var['janus.jcfg']['token_auth'] }}"				
+                                    # Enable a token based authentication
 									# mechanism to force users to always provide
 									# a valid token in all requests. Useful if
 									# you want to authenticate requests from web
 									# users.
-	#token_auth_secret = "janus"	# Use HMAC-SHA1 signed tokens (with token_auth). Note that
+	#token_auth_secret = "{{ janus_conf_var['janus.jcfg']['token_auth_secret'] }}"		
+                                    # Use HMAC-SHA1 signed tokens (with token_auth). Note that
 									# without this, the Admin API MUST
 									# be enabled, as tokens are added and removed
 									# through messages sent there.
-	admin_secret = "janusoverlord"	# String that all Janus requests must contain
+	admin_secret = "{{ janus_conf_var['janus.jcfg']['admin_secret'] }}"	
+                                    # String that all Janus requests must contain
 									# to be accepted/authorized by the admin/monitor.
 									# only needed if you enabled the admin API
 									# in any of the available transports.
