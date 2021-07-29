@@ -1,20 +1,45 @@
-Role Name
+Ansible Role: Janus Gateway
 =========
 
-A brief description of the role goes here.
+An Ansible role to install and configure [janus-gateway](https://github.com/meetecho/janus-gateway), a general-purpose WebRTC server.
+
+Supported Platforms & Architectures
+------------
+
+| Platform | Version | armhf | aarch64 | amd64 |
+|----------|---------|-------|---------|-------|
+| Debian   | buster  | armhf |         |       |
+|          |         |       |         |       |
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+The development of this role requires Molecule >= 3.3
+
+```
+$ python3 -m pip install "molecule[ansible,lint,docker]" 
+```
+
+```
+$ molecule --version
+molecule 3.3.4 using python 3.8 
+    ansible:2.11.3
+    delegated:3.3.4 from molecule
+    docker:0.2.4 from molecule_docker
+```
+
+See [Molecule's installation docs](https://molecule.readthedocs.io/en/latest/installation.html) for additional install methods and options. 
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+See [defaults/main.yml](defaults/main.yml) for this roles's configurable variables and default values.
+
 
 Dependencies
 ------------
+
+None yet
 
 A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
 
@@ -23,16 +48,16 @@ Example Playbook
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: servers
+    - hosts: raspberry-pi-cctvs
       roles:
-         - { role: username.rolename, x: 42 }
+         - { role: bitsy-ai.janus-gateway, ... }
 
 License
 -------
 
-BSD
+GPLv3
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+https://bitsy.ai/about/

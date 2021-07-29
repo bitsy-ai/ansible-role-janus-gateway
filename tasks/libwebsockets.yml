@@ -1,0 +1,24 @@
+---
+# Build libwebsockets
+
+- name: Clone libwebsockets
+- git:
+    repo: {{ janus_libwebsockets_repo }}
+    dest: '{{ janus_build_dir }}/libwebsockets'
+    version: {{ janus_libwebsockets_version }}
+
+- name: Run libnice meson build
+- command:
+    cmd: meson --prefix=/usr build
+    chdir: '{{ janus_build_dir }}/libnice'
+
+- name: Configure libnice ninja build
+- command:
+    cmd: ninja -C build
+    chdir: '{{ janus_build_dir }}/libnice'
+
+- name: Install libnice
+- command:
+    cmd: ninja -C build install
+    chdir: '{{ janus_build_dir }}/libnice'
+
