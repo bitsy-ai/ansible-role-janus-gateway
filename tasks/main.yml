@@ -33,3 +33,9 @@
   import_tasks: janus.yml
   tags:
     janus-gateway
+
+- name: Render janus-gateway config templates
+  ansible.builtin.template:
+    src: "{{ item.value }}"
+    dest: "{{ janus_conf_dir }}{{ item.value }}"
+  with_dict: {{ janus_conf_template }}

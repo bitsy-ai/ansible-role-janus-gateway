@@ -24,3 +24,38 @@ janus_gateway_version: v0.11.3
 
 janus_build_dir: /opt/workspace
 janus_install_dir: /opt/janus
+
+janus_conf_dir: "{{ janus_install_dir }}/etc/janus/"
+janus_conf_var:
+  janus.jcfg: janus.jcfg
+    plugins_folder: "{{ janus_install_dir }}/lib/janus/plugins"
+    transports_folder: "{{ janus_install_dir }}/lib/janus/transports"
+    events_folder: "{{ janus_install_dir }}/lib/janus/events"
+    loggers_folder: "{{ janus_install_dir }}/lib/janus/loggers"
+    log_to_stdout: true
+    debug_level: 4
+    daemonize: false
+    pid_file: "/var/run/janus.pid"
+    api_secret: "{{ lookup('password', '/dev/null length=42 chars=ascii_letters') }}"
+    token_auth: true
+    token_auth_secret: "{{ lookup('password', '/dev/null length=42 chars=ascii_letters') }}"
+    admin_secret: "{{ lookup('password', '/dev/null length=42 chars=ascii_letters') }}"
+    server_name: "{{ inventory_hostname }}"
+    
+janus_conf_template:
+  janus.eventhandler.gelfevh.jcfg: janus-conf/janus.eventhandler.gelfevh.jcfg
+  janus.eventhandler.sampleevh.jcfg: janus-conf/janus.eventhandler.sampleevh.jcfg
+  janus.eventhandler.wsevh.jcfg: janus-conf/janus.eventhandler.wsevh.jcfg
+  janus.jcfg: janus.jcfg
+  janus.plugin.audiobridge.jcfg: janus.plugin.audiobridge.jcfg
+  janus.plugin.echotest.jcfg: janus.plugin.echotest.jcfg
+  janus.plugin.nosip.jcfg: janus.plugin.nosip.jcfg
+  janus.plugin.recordplay.jcfg: janus.plugin.recordplay.jcfg
+  janus.plugin.sip.jcfg: janus.plugin.sip.jcfg
+  janus.plugin.streaming.jcfg: janus.plugin.streaming.jcfg
+  janus.plugin.textroom.jcfg: janus.plugin.textroom.jcfg
+  janus.plugin.videocall.jcfg: janus.plugin.videocall.jcfg
+  janus.plugin.voicemail.jcfg: janus.plugin.voicemail.jcfg
+  janus.transport.http.jcfg: janus.transport.http.jcfg
+  janus.transport.pfunix: janus.transport.pfunix
+  janus.transport.websockets.jcfg: janus.transport.websockets.jcfg
