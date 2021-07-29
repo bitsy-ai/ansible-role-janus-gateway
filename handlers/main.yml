@@ -1,2 +1,11 @@
 ---
 # handlers file for ansible-role-janus-gateway
+
+- name: Reload systemd config
+  systemd:
+    daemon_reload: yes
+
+- name: restart janus-gateway
+  service:
+    name: janus-gateway
+    state: restarted

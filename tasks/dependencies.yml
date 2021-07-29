@@ -1,0 +1,57 @@
+---
+# tasks file for ansible-role-janus-gateway
+
+
+- name: Install required platform dependencies
+  apt:
+    name:
+      - libmicrohttpd-dev
+      - libjansson-dev
+      - libssl-dev
+      - libsofia-sip-ua-dev
+      - libglib2.0-dev
+      - libopus-dev
+      - libogg-dev
+      - libcurl4-openssl-dev
+      - liblua5.3-dev
+      - libconfig-dev
+      - pkg-config
+      - gengetopt
+      - libtool
+      - automake
+      - build-essential
+      - git
+      - python3-pip
+      - wget
+    state: present
+  tags:
+    janus-gateway
+
+- name: Install rabbitmq dependencies
+  when: ( {{ janus_build_extras['rabbitmq'] == True }})
+  fail: RabbitMQ for Janus event/API is not yet supported by this role. Please open a pull request with build play for https://github.com/alanxz/rabbitmq-c
+  tags:
+    janus-gateway
+
+- name: Install mqtt dependencies
+  when: ( {{ janus_build_extras['mqtt'] == True }})
+  fail: MQTT for Janus events/API is not yet supported by this role. Please open a pull request with build play for https://eclipse.org/paho/clients/c
+  tags:
+    janus-gateway
+
+- name: Install Nanomsg dependencies
+  when: ( {{ janus_build_extras['nanomsg'] == True }})
+  fail: nanomsg for Janus API is not yet supported by this role. Please open a pull request with build play for https://eclipse.org/paho/clients/c
+  tags:
+    janus-gateway
+
+- name: Install libwebsockets dependencies
+  when: ( {{ janus_build_extras['websockets'] == True }})
+  apt:
+    name:
+      - cmake
+
+    state: present
+  tags:
+    janus-gateway
+

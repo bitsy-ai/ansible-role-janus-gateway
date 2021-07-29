@@ -1,2 +1,35 @@
 ---
 # tasks file for ansible-role-janus-gateway
+- name: Install platform dependencies
+  import_tasks: dependencies.yml
+  tags:
+    janus-gateway
+
+- name: Create workspace
+  path: {{ janus_build_dir }}
+  state: directory
+
+- name: Install libnice
+  import_tasks: libnice.yml
+  tags:
+    janus-gateway
+
+- name: Install usrsctp
+  import_tasks: usrsctp.yml
+  tags:
+    janus-gateway
+
+- name: Install libwebsockets
+  import_tasks: libwebsockets.yml
+  tags:
+    janus-gateway
+
+- name: Install libsrtp
+  import_tasks: libsrtp.yml
+  tags:
+    janus-gateway
+
+- name: Install janus-gateway
+  import_tasks: janus.yml
+  tags:
+    janus-gateway
