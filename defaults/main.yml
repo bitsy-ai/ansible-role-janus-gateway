@@ -41,6 +41,11 @@ janus_conf_var:
     token_auth_secret: "{{ lookup('password', '/dev/null length=42 chars=ascii_letters') }}"
     admin_secret: "{{ lookup('password', '/dev/null length=42 chars=ascii_letters') }}"
     server_name: "{{ inventory_hostname }}"
+    session_timeout: 60
+    candidate_timeout: 45
+    reclaim_session_timeout: 0
+    recordings_tmp_ext: mjr
+    no_webrtc_encryption: false
     
 janus_conf_template:
   janus.eventhandler.gelfevh.jcfg: janus-conf/janus.eventhandler.gelfevh.jcfg
