@@ -27,7 +27,7 @@ janus_install_dir: /opt/janus
 
 janus_conf_dir: "{{ janus_install_dir }}/etc/janus/"
 janus_conf_var:
-  janus.jcfg: janus.jcfg
+  janus.jcfg:
     plugins_folder: "{{ janus_install_dir }}/lib/janus/plugins"
     transports_folder: "{{ janus_install_dir }}/lib/janus/transports"
     events_folder: "{{ janus_install_dir }}/lib/janus/events"
