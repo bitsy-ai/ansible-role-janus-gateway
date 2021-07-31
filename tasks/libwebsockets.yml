@@ -7,18 +7,22 @@
     dest: '{{ janus_build_dir }}/libwebsockets'
     version: {{ janus_libwebsockets_version }}
 
-- name: Run libnice meson build
-- command:
-    cmd: meson --prefix=/usr build
-    chdir: '{{ janus_build_dir }}/libnice'
+- name: Create build dir
+- file:
+    path: '{{ janus_build_dir }}/libwebsockets/build'
+    directory: true
 
-- name: Configure libnice ninja build
+- name: Make websockets build configs
 - command:
-    cmd: ninja -C build
-    chdir: '{{ janus_build_dir }}/libnice'
+    cmd: cmake -DLWS_MAX_SMP=1 -DLWS_WITHOUT_EXTENSIONS=0 -DCMAKE_INSTALL_PREFIX:PATH=/usr -DCMAKE_C_FLAGS="-fpic" ..
+    chdir: '{{ janus_build_dir }}/libwebsockets/build'
 
-- name: Install libnice
+- name: Make websockets library
 - command:
-    cmd: ninja -C build install
-    chdir: '{{ janus_build_dir }}/libnice'
+    cmd: make
+    chdir: '{{ janus_build_dir }}/libwebsockets/build'
 
+- name: Install websockets library
+- command:
+    cmd: make install
+    chdir: '{{ janus_build_dir }}/libwebsockets/build'
