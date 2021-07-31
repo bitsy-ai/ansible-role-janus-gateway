@@ -4,4 +4,4 @@
   tasks:
     - name: "Include ansible-role-janus-gateway"
       include_role:
-        name: "ansible-role-janus-gateway"
+        name: "janus_gateway"
