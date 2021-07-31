@@ -4,6 +4,10 @@
 #
 #    pip-compile
 #
+ansible==4.3.0
+    # via molecule
+ansible-core==2.11.3
+    # via ansible
 ansible-lint==5.1.2
     # via
     #   -r requirements.in
@@ -47,7 +51,9 @@ commonmark==0.9.1
 cookiecutter==1.7.3
     # via molecule
 cryptography==3.4.7
-    # via paramiko
+    # via
+    #   ansible-core
+    #   paramiko
 distlib==0.3.2
     # via virtualenv
 distro==1.6.0
@@ -70,6 +76,7 @@ idna==3.2
     # via requests
 jinja2==3.0.1
     # via
+    #   ansible-core
     #   cookiecutter
     #   jinja2-time
     #   molecule
@@ -79,7 +86,7 @@ markupsafe==2.0.1
     # via jinja2
 mccabe==0.6.1
     # via flake8
-molecule[docker,lint]==3.3.4
+molecule[ansible,docker,lint]==3.3.4
     # via
     #   -r requirements.in
     #   molecule-docker
@@ -89,6 +96,7 @@ nodeenv==1.6.0
     # via pre-commit
 packaging==21.0
     # via
+    #   ansible-core
     #   ansible-lint
     #   molecule
 paramiko==2.7.2
@@ -121,6 +129,7 @@ python-slugify==5.0.2
     # via cookiecutter
 pyyaml==5.4.1
     # via
+    #   ansible-core
     #   ansible-lint
     #   molecule
     #   pre-commit
@@ -129,6 +138,8 @@ requests==2.26.0
     # via
     #   cookiecutter
     #   docker
+resolvelib==0.5.4
+    # via ansible-core
 rich==10.6.0
     # via
     #   ansible-lint

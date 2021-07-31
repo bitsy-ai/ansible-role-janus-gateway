@@ -1,3 +1,4 @@
-molecule[docker,lint]
+
+molecule[ansible,docker,lint]
 ansible-lint
 flake8

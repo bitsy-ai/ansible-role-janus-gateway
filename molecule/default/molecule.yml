@@ -2,10 +2,23 @@
 dependency:
   name: galaxy
 driver:
-  name: delegated
+  name: docker
 platforms:
-  - name: instance
+  - name: debian10
+
 provisioner:
   name: ansible
+  log: true
 verifier:
   name: ansible
+  
+scenario:
+  name: default
+  test_sequence:
+    - lint
+    - destroy
+    - syntax
+    - create
+    - converge
+    - idempotence
+    - destroy
