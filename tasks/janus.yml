@@ -1,27 +1,33 @@
 ---
 # Build janus-gateway
+- name: Clone janus-gateway
+  git:
+    repo: "{{ janus_gateway_repo }}"
+    dest: "{{ janus_gateway_dir }}"
+    version: "{{ janus_libnice_version }}"
 
-- name: Install meson and ninja build systems
-- command: python3 -m pip install meson ninja
+- name: Run janus-gateway config autogen
+  command:
+    cmd: sh autogen.sh
+    chdir: "{{ janus_gateway_dir }}"
 
-- name: Clone libnice
-- git:
-    repo: {{ janus_libnice_repo }}
-    dest: '{{ janus_build_dir }}/libnice'
-    version: {{ janus_libnice_version }}
+- name: Configure janus-gateway build
+  command:
+    cmd: ./configure --prefix=/opt/janus --disable-rabbitmq --disable-mqtt
+    chdir: "{{ janus_gateway_dir }}"
 
-- name: Run libnice meson build
-- command:
-    cmd: meson --prefix=/usr build
-    chdir: '{{ janus_build_dir }}/libnice'
+- name: Build janus-gateway
+  command:
+    cmd: make
+    chdir: "{{ janus_gateway_dir }}"
 
-- name: Configure libnice ninja build
-- command:
-    cmd: ninja -C build
-    chdir: '{{ janus_build_dir }}/libnice'
+- name: Install janus-gateway
+  command:
+    cmd: make install
+    chdir: "{{ janus_gateway_dir }}"
 
-- name: Install libnice
-- command:
-    cmd: ninja -C build install
-    chdir: '{{ janus_build_dir }}/libnice'
-
+- name: Render janus-gateway config templates
+  ansible.builtin.template:
+    src: "{{ item.value }}"
+    dest: "{{ janus_conf_dir }}{{ item.value }}"
+  with_dict: "{{ janus_conf_template }}"

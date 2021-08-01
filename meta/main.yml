@@ -1,5 +1,6 @@
 galaxy_info:
-  role_name: janus-gateway
+  namespace: bitsyai
+  role_name: janus_gateway
   author: Leigh Johnson
   description: An Ansible role to install & configure janus-gateway https://github.com/meetecho/janus-gateway
   company: Bitsy AI Labs

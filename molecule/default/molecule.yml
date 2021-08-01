@@ -5,6 +5,7 @@ driver:
   name: docker
 platforms:
   - name: debian10
+    image: debian:buster
 
 provisioner:
   name: ansible

@@ -1,27 +1,27 @@
 ---
 # Build usrscp
 - name: Clone usrsctp
-- git:
+  git:
     repo: https://github.com/sctplab/usrsctp
-    dest: '{{ janus_build_dir }}/usrsctp'
-    version: {{ janus_usrsctp_version }}
+    dest: "{{ janus_usrsctp_dir }}"
+    version: "{{ janus_usrsctp_version }}"
 
 - name: Bootstrap usrsctp
-- command:
+  command:
     cmd: ./bootstrap
-    chdir: '{{ janus_build_dir }}/usrsctp'
+    chdir: "{{ janus_usrsctp_dir }}"
 
 - name: Configure usrsctp
-- command:
+  command:
     cmd: ./configure --prefix=/usr --disable-programs --disable-inet --disable-inet6
-    chdir: '{{ janus_build_dir }}/usrsctp'
+    chdir: "{{ janus_usrsctp_dir }}"
 
 - name: Automate usrsctp
-- command:
+  command:
     cmd: make
-    chdir: '{{ janus_build_dir }}/usrsctp'
+    chdir: "{{ janus_usrsctp_dir }}"
 
 - name: Install usrsctp
-- command:
+  command:
     cmd: make install
-    chdir: '{{ janus_build_dir }}/usrsctp'
+    chdir: "{{ janus_usrsctp_dir }}"

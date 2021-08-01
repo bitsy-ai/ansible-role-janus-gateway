@@ -5,29 +5,34 @@ janus_build_extras:
   websockets: true
   rabbitmq: false
   mqtt: false
-  nanmsg: false
-
-janus_libwebsockets_repo: https://libwebsockets.org/repo/libwebsockets
-janus_libwebsockets_version: v3.2-stable
-
-janus_libnice_repo: https://gitlab.freedesktop.org/libnice/libnice
-janus_libnice_version: master
-
-janus_usrsctp_repo: https://github.com/sctplab/usrsctp
-janus_usrsctp_version: master
-
-janus_libsrtp_repo: https://github.com/cisco/libsrtp/archive/
-janus_libsrtp_version: v2.2.0
-
-janus_gateway_repo: https://github.com/meetecho/janus-gateway.git
-janus_gateway_version: v0.11.3
+  nanomsg: false
 
 janus_build_dir: /opt/workspace
 janus_install_dir: /opt/janus
 
+janus_libwebsockets_dir: "{{ janus_build_dir }}/libwebsockets"
+janus_libwebsockets_repo: https://libwebsockets.org/repo/libwebsockets
+janus_libwebsockets_version: v3.2-stable
+
+janus_libnice_dir:  "{{ janus_build_dir }}/libnice"
+janus_libnice_repo: https://gitlab.freedesktop.org/libnice/libnice
+janus_libnice_version: master
+
+janus_usrsctp_dir: "{{ janus_build_dir }}/usrsctp"
+janus_usrsctp_repo: https://github.com/sctplab/usrsctp
+janus_usrsctp_version: master
+
+janus_libsrtp_tarball: https://github.com/cisco/libsrtp/archive/v2.2.0.tar.gz
+janus_libsrtp_dir: "{{ janus_build_dir }}/libsrtp-2.2.0"
+
+janus_gateway_dir: "{{ janus_build_dir }}/janus-gateway"
+janus_gateway_repo: https://github.com/meetecho/janus-gateway.git
+janus_gateway_version: v0.11.3
+
+
 janus_conf_dir: "{{ janus_install_dir }}/etc/janus/"
 janus_conf_var:
-  janus.jcfg: janus.jcfg
+  janus.jcfg:
     plugins_folder: "{{ janus_install_dir }}/lib/janus/plugins"
     transports_folder: "{{ janus_install_dir }}/lib/janus/transports"
     events_folder: "{{ janus_install_dir }}/lib/janus/events"
@@ -42,15 +47,15 @@ janus_conf_var:
     admin_secret: "{{ lookup('password', '/dev/null length=42 chars=ascii_letters') }}"
     server_name: "{{ inventory_hostname }}"
     session_timeout: 60
-    candidate_timeout: 45
+    candidates_timeout: 45
     reclaim_session_timeout: 0
     recordings_tmp_ext: mjr
     no_webrtc_encryption: false
     
 janus_conf_template:
-  janus.eventhandler.gelfevh.jcfg: janus-conf/janus.eventhandler.gelfevh.jcfg
-  janus.eventhandler.sampleevh.jcfg: janus-conf/janus.eventhandler.sampleevh.jcfg
-  janus.eventhandler.wsevh.jcfg: janus-conf/janus.eventhandler.wsevh.jcfg
+  janus.eventhandler.gelfevh.jcfg: janus.eventhandler.gelfevh.jcfg
+  janus.eventhandler.sampleevh.jcfg: janus.eventhandler.sampleevh.jcfg
+  janus.eventhandler.wsevh.jcfg: janus.eventhandler.wsevh.jcfg
   janus.jcfg: janus.jcfg
   janus.plugin.audiobridge.jcfg: janus.plugin.audiobridge.jcfg
   janus.plugin.echotest.jcfg: janus.plugin.echotest.jcfg
@@ -62,5 +67,5 @@ janus_conf_template:
   janus.plugin.videocall.jcfg: janus.plugin.videocall.jcfg
   janus.plugin.voicemail.jcfg: janus.plugin.voicemail.jcfg
   janus.transport.http.jcfg: janus.transport.http.jcfg
-  janus.transport.pfunix: janus.transport.pfunix
+  janus.transport.pfunix.jcfg: janus.transport.pfunix.jcfg
   janus.transport.websockets.jcfg: janus.transport.websockets.jcfg

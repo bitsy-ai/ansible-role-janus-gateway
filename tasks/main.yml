@@ -6,8 +6,9 @@
     janus-gateway
 
 - name: Create workspace
-  path: {{ janus_build_dir }}
-  state: directory
+  ansible.builtin.file :
+    path: "{{ janus_build_dir }}"
+    state: directory
 
 - name: Install libnice
   import_tasks: libnice.yml
@@ -33,9 +34,3 @@
   import_tasks: janus.yml
   tags:
     janus-gateway
-
-- name: Render janus-gateway config templates
-  ansible.builtin.template:
-    src: "{{ item.value }}"
-    dest: "{{ janus_conf_dir }}{{ item.value }}"
-  with_dict: {{ janus_conf_template }}
