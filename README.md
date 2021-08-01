@@ -8,8 +8,7 @@ Supported Platforms & Architectures
 
 | Platform | Version | armhf | aarch64 | amd64 |
 |----------|---------|-------|---------|-------|
-| Debian   | buster  | armhf |         |       |
-|          |         |       |         |       |
+| Debian   | buster  | ✅    |     ✅   |   ✅  |
 
 Requirements
 ------------
@@ -50,7 +49,7 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: raspberry-pi-cctvs
       roles:
-         - { role: bitsy-ai.janus-gateway, ... }
+         - { role: bitsyai.janus_gateway, ... }
 
 License
 -------
