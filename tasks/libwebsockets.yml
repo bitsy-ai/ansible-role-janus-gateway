@@ -1,28 +1,27 @@
 ---
 # Build libwebsockets
-
 - name: Clone libwebsockets
-- git:
-    repo: {{ janus_libwebsockets_repo }}
-    dest: '{{ janus_build_dir }}/libwebsockets'
-    version: {{ janus_libwebsockets_version }}
+  git:
+    repo: "{{ janus_libwebsockets_repo }}"
+    dest: "{{ janus_libwebsockets_dir }}"
+    version: "{{ janus_libwebsockets_version }}"
 
 - name: Create build dir
-- file:
-    path: '{{ janus_build_dir }}/libwebsockets/build'
-    directory: true
+  file:
+    path: "{{ janus_libwebsockets_dir }}/build"
+    state: directory
 
 - name: Make websockets build configs
-- command:
+  command:
     cmd: cmake -DLWS_MAX_SMP=1 -DLWS_WITHOUT_EXTENSIONS=0 -DCMAKE_INSTALL_PREFIX:PATH=/usr -DCMAKE_C_FLAGS="-fpic" ..
-    chdir: '{{ janus_build_dir }}/libwebsockets/build'
+    chdir: "{{ janus_libwebsockets_dir }}/build"
 
 - name: Make websockets library
-- command:
+  command:
     cmd: make
-    chdir: '{{ janus_build_dir }}/libwebsockets/build'
+    chdir: "{{ janus_libwebsockets_dir }}/build"
 
 - name: Install websockets library
-- command:
+  command:
     cmd: make install
-    chdir: '{{ janus_build_dir }}/libwebsockets/build'
+    chdir: "{{ janus_libwebsockets_dir }}/build"

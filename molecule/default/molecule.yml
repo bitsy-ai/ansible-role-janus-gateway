@@ -5,7 +5,7 @@ driver:
   name: docker
 platforms:
   - name: debian10
-    image: geerlingguy/docker-debian10-ansible:latest
+    image: debian:buster
 
 provisioner:
   name: ansible

@@ -1,21 +1,33 @@
 ---
+
+- name: Create libsrtp table
+  ansible.builtin.file:
+    path: "{{ janus_libsrtp_dir }}"
+    state: directory
+
 - name: Download and unarchive libsrtp 
   ansible.builtin.unarchive:
-    src: '{{ janus_libsrtp_repo }}{{ janus_libsrtp_version }}'
+    src: '{{ janus_libsrtp_repo }}{{ janus_libsrtp_version }}.tar.gz'
     dest: '{{ janus_build_dir}}/libsrtp'
     remote_src: yes
 
 - name: Configure libsrtp
-- command:
+  command:
+    cmd: ls -ahl
+    chdir: "{{ janus_libsrtp_dir }}"
+  register: files_list
+
+- name: Configure libsrtp
+  command:
     cmd: ./configure --prefix=/usr --enable-openssl
-    chdir: '{{ janus_build_dir }}/libsrtp'
+    chdir: "{{ janus_libsrtp_dir }}"
 
 - name: Build libsrtp
-- command:
+  command:
     cmd:  make shared_library
     chdir: '{{ janus_build_dir }}/libsrtp'
 
 - name: Install libsrtp
-- command:
+  command:
     cmd: make
     chdir: '{{ janus_build_dir }}/libsrtp'

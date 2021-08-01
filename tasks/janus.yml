@@ -2,26 +2,26 @@
 # Build janus-gateway
 
 - name: Install meson and ninja build systems
-- command: python3 -m pip install meson ninja
+  command: python3 -m pip install meson ninja
 
 - name: Clone libnice
-- git:
-    repo: {{ janus_libnice_repo }}
-    dest: '{{ janus_build_dir }}/libnice'
-    version: {{ janus_libnice_version }}
+  git:
+    repo: "{{ janus_gateway_repo }}"
+    dest: "{{ janus_build_dir }}/janus-gateway"
+    version: "{{ janus_libnice_version }}"
 
 - name: Run libnice meson build
-- command:
+  command:
     cmd: meson --prefix=/usr build
-    chdir: '{{ janus_build_dir }}/libnice'
+    chdir: "{{ janus_build_dir }}/libnice"
 
 - name: Configure libnice ninja build
-- command:
+  command:
     cmd: ninja -C build
-    chdir: '{{ janus_build_dir }}/libnice'
+    chdir: "{{ janus_build_dir }}/libnice"
 
 - name: Install libnice
-- command:
+  command:
     cmd: ninja -C build install
-    chdir: '{{ janus_build_dir }}/libnice'
+    chdir: "{{ janus_build_dir }}/libnice"
 
