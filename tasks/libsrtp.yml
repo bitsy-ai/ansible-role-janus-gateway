@@ -8,7 +8,7 @@
 - name: Download and unarchive libsrtp 
   ansible.builtin.unarchive:
     src: '{{ janus_libsrtp_tarball }}'
-    dest: '{{ janus_libsrtp_dir }}'
+    dest: '{{ janus_build_dir }}'
     remote_src: yes
 
 - name: Configure libsrtp
