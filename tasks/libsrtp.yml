@@ -7,15 +7,9 @@
 
 - name: Download and unarchive libsrtp 
   ansible.builtin.unarchive:
-    src: '{{ janus_libsrtp_repo }}{{ janus_libsrtp_version }}.tar.gz'
-    dest: '{{ janus_build_dir}}/libsrtp'
+    src: '{{ janus_libsrtp_tarball }}'
+    dest: '{{ janus_libsrtp_dir }}'
     remote_src: yes
-
-- name: Configure libsrtp
-  command:
-    cmd: ls -ahl
-    chdir: "{{ janus_libsrtp_dir }}"
-  register: files_list
 
 - name: Configure libsrtp
   command:
@@ -25,9 +19,9 @@
 - name: Build libsrtp
   command:
     cmd:  make shared_library
-    chdir: '{{ janus_build_dir }}/libsrtp'
+    chdir: "{{ janus_libsrtp_dir }}"
 
 - name: Install libsrtp
   command:
-    cmd: make
-    chdir: '{{ janus_build_dir }}/libsrtp'
+    cmd: make install
+    chdir: "{{ janus_libsrtp_dir }}"
