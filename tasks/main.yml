@@ -2,13 +2,6 @@
 # Build notes
 # Libs conforming to Debian Multiarch are installed to /usr/local/lib/$(gcc -dumpmachine)/
 # https://wiki.debian.org/Multiarch
-
-- name: Register gcc machine arch
-  command:
-    cmd: gcc -dumpmachine
-  register: gcc_dumpmachine
-  changed_when: False # disable idempotency check (expected to always run)
-  
 - ansible.builtin.set_fact:
     janus_api_secret: "{{ lookup('password', '.tmp/janus_api_secret length=42 chars=ascii_letters') }}"
     janus_token_auth_secret: "{{ lookup('password', '.tmp/janus_token_auth_secret length=42 chars=ascii_letters') }}"
