@@ -1,7 +1,5 @@
 ---
 # tasks file for ansible-role-janus-gateway
-
-
 - name: Install required platform dependencies
   apt:
     update_cache: true
@@ -59,3 +57,5 @@
   tags:
     janus-gateway
 
+- ansible.builtin.set_fact:
+    gcc_dumpmachine: "{{ gcc_dumpmachine.stdout }}"
