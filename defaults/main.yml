@@ -19,7 +19,7 @@ janus_install_dir: /opt/janus
 janus_lib_prefix: /usr/local
 
 janus_libwebsockets_build_dir: "{{ janus_workspace_dir }}/libwebsockets"
-janus_libwebsockets_repo: https://libwebsockets.org/repo/libwebsockets
+janus_libwebsockets_repo: https://libwebsockets.org/git/libwebsockets
 janus_libwebsockets_version: v3.2-stable
 
 janus_libnice_build_dir:  "{{ janus_workspace_dir }}/libnice"
