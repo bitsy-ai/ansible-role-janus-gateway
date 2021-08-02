@@ -7,8 +7,15 @@ janus_build_extras:
   mqtt: false
   nanomsg: false
 
+janus_installed_versions:
+  janus: null
+  libnice: null
+  usrsctp: null
+  libsrtp: null
+  libwebsockets: null
+
 janus_workspace_dir: /opt/workspace
-janus_install_dir: /usr/local/janus
+janus_install_dir: /opt/janus
 janus_lib_prefix: /usr/local
 
 janus_libwebsockets_build_dir: "{{ janus_workspace_dir }}/libwebsockets"
@@ -16,7 +23,7 @@ janus_libwebsockets_repo: https://libwebsockets.org/repo/libwebsockets
 janus_libwebsockets_version: v3.2-stable
 
 janus_libnice_build_dir:  "{{ janus_workspace_dir }}/libnice"
-janus_libnice_repo: https://gitlab.freedesktop.org/libnice/libnice
+janus_libnice_repo: https://github.com/libnice/libnice
 janus_libnice_version: ba47c6ccc312f27f207bce007569588698bdc17f
 
 janus_usrsctp_build_dir: "{{ janus_workspace_dir }}/usrsctp"
@@ -30,9 +37,15 @@ janus_libsrtp_build_dir: "{{ janus_workspace_dir }}/libsrtp-{{ janus_libsrtp_ver
 janus_build_dir: "{{ janus_workspace_dir }}/janus-gateway"
 janus_repo: https://github.com/meetecho/janus-gateway.git
 janus_version: v0.11.3
+janus_upgrade_available: "{{ not janus_installed_versions.janus or janus_installed_versions.janus < janus_version }}"
 
+janus_api_secret: null
+janus_token_auth_secret: null
+janus_admin_secret: null
 
 janus_conf_dir: "{{ janus_install_dir }}/etc/janus/"
+
+
 janus_conf_var:
   janus.jcfg:
     plugins_folder: "{{ janus_install_dir }}/lib/janus/plugins"
@@ -43,10 +56,10 @@ janus_conf_var:
     debug_level: 4
     daemonize: false
     pid_file: "/var/run/janus.pid"
-    api_secret: "{{ lookup('password', '/dev/null length=42 chars=ascii_letters') }}"
+    api_secret: "{{ janus_api_secret }}"
     token_auth: true
-    token_auth_secret: "{{ lookup('password', '/dev/null length=42 chars=ascii_letters') }}"
-    admin_secret: "{{ lookup('password', '/dev/null length=42 chars=ascii_letters') }}"
+    token_auth_secret: "{{ janus_token_auth_secret }}"
+    admin_secret: "{{ janus_admin_secret }}"
     server_name: "{{ inventory_hostname }}"
     session_timeout: 60
     candidates_timeout: 45

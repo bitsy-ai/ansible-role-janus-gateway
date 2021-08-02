@@ -1,4 +1,34 @@
----
+# tasks file for ansible-role-janus-gateway
+- name: Install platform dependencies
+  import_tasks: dependencies.yml
+  tags:
+    janus-gateway
+
+- name: Create workspace
+  ansible.builtin.file :
+    path: "{{ janus_workspace_dir }}"
+    state: directory
+
+- name: Install libnice
+  import_tasks: libnice.yml
+  tags:
+    janus-gateway
+
+- name: Install usrsctp
+  import_tasks: usrsctp.yml
+  tags:
+    janus-gateway
+
+- name: Install libwebsockets
+  import_tasks: libwebsockets.yml
+  tags:
+    janus-gateway
+
+- name: Install libsrtp
+  import_tasks: libsrtp.yml
+  tags:
+    janus-gateway
+
 # Build janus-gateway
 - name: Clone janus-gateway
   git:
@@ -10,32 +40,27 @@
   command:
     cmd: sh autogen.sh
     chdir: "{{ janus_build_dir }}"
-  when: janus_installed_version is not defined or janus_installed_version!= janus_version
 
 - name: Configure janus-gateway build
   command:
     cmd: "./configure --prefix={{ janus_install_dir }} --disable-rabbitmq --disable-mqtt"
     chdir: "{{ janus_build_dir }}"
-  when: janus_installed_version is not defined or janus_installed_version!= janus_version
 
 - name: Build janus-gateway
   command:
     cmd: make
     chdir: "{{ janus_build_dir }}"
-  when: janus_installed_version is not defined or janus_installed_version!= janus_version
 
 - name: Install janus-gateway
   command:
     cmd: make install
     chdir: "{{ janus_build_dir }}"
-  when: janus_installed_version is not defined or janus_installed_version!= janus_version
-
-- name: Render janus-gateway config templates
-  ansible.builtin.template:
-    src: "{{ item.value }}"
-    dest: "{{ janus_conf_dir }}{{ item.value }}"
-  with_dict: "{{ janus_conf_template }}"
-
+  
 - ansible.builtin.set_fact:
-    janus_installed_version:  "{{ janus_version }}"
+    janus_installed_versions:  
+      janus: "{{ janus_version }}"
+      libnice: "{{ janus_libnice_version }}"
+      usrsctp: "{{ janus_usrsctp_version }}"
+      libsrtp: "{{ janus_libsrtp_version }}"
+      libwebsockets: "{{ janus_libwebsockets_version }}"
     cacheable: yes

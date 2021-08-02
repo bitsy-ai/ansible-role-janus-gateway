@@ -1,10 +1,4 @@
 ---
-# tasks file for ansible-role-janus-gateway
-- name: Install platform dependencies
-  import_tasks: dependencies.yml
-  tags:
-    janus-gateway
-
 # Build notes
 # Libs conforming to Debian Multiarch are installed to /usr/local/lib/$(gcc -dumpmachine)/
 # https://wiki.debian.org/Multiarch
@@ -18,37 +12,22 @@
 - ansible.builtin.set_fact:
     gcc_dumpmachine: "{{ gcc_dumpmachine.stdout }}"
 
-- name: Create workspace
-  ansible.builtin.file :
-    path: "{{ janus_workspace_dir }}"
-    state: directory
-
-- name: Install libnice
-  import_tasks: libnice.yml
-  tags:
-    janus-gateway
-
-- name: Install usrsctp
-  import_tasks: usrsctp.yml
-  tags:
-    janus-gateway
-
-- name: Install libwebsockets
-  import_tasks: libwebsockets.yml
-  tags:
-    janus-gateway
-
-- name: Install libsrtp
-  import_tasks: libsrtp.yml
-  tags:
-    janus-gateway
-
-- name: Install janus-gateway
+- ansible.builtin.set_fact:
+    janus_api_secret: "{{ lookup('password', '.tmp/janus_api_secret length=42 chars=ascii_letters') }}"
+    janus_token_auth_secret: "{{ lookup('password', '.tmp/janus_token_auth_secret length=42 chars=ascii_letters') }}"
+    janus_admin_secret: "{{ lookup('password', '.tmp/janus_admin_secret length=42 chars=ascii_letters') }}"
+    cacheable: yes
+  when: not janus_api_secret or not janus_token_auth_secret or not janus_admin_secret
+  
+- name: Build janus-gateway from source
   import_tasks: janus.yml
   tags:
     janus-gateway
+  when: janus_upgrade_available
 
-# - name: Create workspace
-#   ansible.builtin.file :
-#     path: "{{ janus_workspace_dir }}"
-#     state: absent
+- name: Render janus-gateway config templates
+  ansible.builtin.template:
+    src: "{{ item.value }}"
+    dest: "{{ janus_conf_dir }}{{ item.value }}"
+  with_dict: "{{ janus_conf_template }}"
+  
