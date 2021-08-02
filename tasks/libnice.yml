@@ -17,13 +17,16 @@
   command:
     cmd: "meson --prefix={{ janus_lib_prefix }} build"
     chdir: "{{ janus_libnice_build_dir }}"
+  when: janus_upgrade_available
 
 - name: Configure libnice ninja build
   command:
     cmd: ninja -C build
     chdir: "{{ janus_libnice_build_dir }}"
+  when: janus_upgrade_available
 
 - name: Install libnice
   command:
     cmd: ninja -C build install
     chdir: "{{ janus_libnice_build_dir }}"
+  when: janus_upgrade_available

@@ -16,6 +16,11 @@ provisioner:
       fact_caching: jsonfile
       fact_caching_connection: .tmp/facts_cache
       fact_caching_timeout: 7200
+
+lint: |
+  set -e
+  yamllint .
+  ansible-lint  
 verifier:
   name: ansible
   

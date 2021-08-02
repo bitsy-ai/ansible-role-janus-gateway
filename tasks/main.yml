@@ -2,7 +2,8 @@
 # Build notes
 # Libs conforming to Debian Multiarch are installed to /usr/local/lib/$(gcc -dumpmachine)/
 # https://wiki.debian.org/Multiarch
-- ansible.builtin.set_fact:
+- name: Generate api secrets
+  ansible.builtin.set_fact:
     janus_api_secret: "{{ lookup('password', '.tmp/janus_api_secret length=42 chars=ascii_letters') }}"
     janus_token_auth_secret: "{{ lookup('password', '.tmp/janus_token_auth_secret length=42 chars=ascii_letters') }}"
     janus_admin_secret: "{{ lookup('password', '.tmp/janus_admin_secret length=42 chars=ascii_letters') }}"
@@ -17,6 +18,7 @@
 
 - name: Render janus-gateway config templates
   ansible.builtin.template:
+    mode: 0644
     src: "{{ item.value }}"
     dest: "{{ janus_conf_dir }}{{ item.value }}"
   with_dict: "{{ janus_conf_template }}"
