@@ -19,7 +19,7 @@ janus_install_dir: /opt/janus
 janus_lib_prefix: /usr/local
 
 janus_libwebsockets_build_dir: "{{ janus_workspace_dir }}/libwebsockets"
-janus_libwebsockets_repo: https://libwebsockets.org/git/libwebsockets
+janus_libwebsockets_repo: https://github.com/warmcat/libwebsockets.git
 janus_libwebsockets_version: v3.2-stable
 
 janus_libnice_build_dir:  "{{ janus_workspace_dir }}/libnice"
@@ -37,7 +37,7 @@ janus_libsrtp_build_dir: "{{ janus_workspace_dir }}/libsrtp-{{ janus_libsrtp_ver
 janus_build_dir: "{{ janus_workspace_dir }}/janus-gateway"
 janus_repo: https://github.com/meetecho/janus-gateway.git
 janus_version: v0.11.3
-janus_upgrade_available: "{{ not janus_installed_versions.janus or janus_installed_versions.janus < janus_version }}"
+janus_upgrade_available: "{{ janus_installed_versions.janus == None or janus_installed_versions.janus < janus_version }}"
 
 janus_api_secret: null
 janus_token_auth_secret: null

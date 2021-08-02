@@ -12,3 +12,4 @@ setup: $(VENV)
 
 clean:
 	rm -rf $(VENV)
+	rm -rf molecule/default/.tmp
