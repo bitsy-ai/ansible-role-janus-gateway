@@ -5,10 +5,10 @@
     janus-gateway
 
 - name: Create workspace
-  ansible.builtin.file :
+  ansible.builtin.file:
     path: "{{ janus_workspace_dir }}"
     state: directory
-
+    mode: 0644
 - name: Install libnice
   import_tasks: libnice.yml
   tags:
@@ -33,30 +33,35 @@
 - name: Clone janus-gateway
   git:
     repo: "{{ janus_repo }}"
-    dest: "{{ janus_build_dir}}"
+    dest: "{{ janus_build_dir }}"
     version: "{{ janus_version }}"
 
 - name: Run janus-gateway config autogen
   command:
     cmd: sh autogen.sh
     chdir: "{{ janus_build_dir }}"
+  when: janus_upgrade_available
 
 - name: Configure janus-gateway build
   command:
     cmd: "./configure --prefix={{ janus_install_dir }} --disable-rabbitmq --disable-mqtt"
     chdir: "{{ janus_build_dir }}"
+  when: janus_upgrade_available
 
 - name: Build janus-gateway
   command:
     cmd: make
     chdir: "{{ janus_build_dir }}"
+  when: janus_upgrade_available
 
 - name: Install janus-gateway
   command:
     cmd: make install
     chdir: "{{ janus_build_dir }}"
-  
-- ansible.builtin.set_fact:
+  when: janus_upgrade_available
+
+- name: Set installed version facts
+  ansible.builtin.set_fact:
     janus_installed_versions:  
       janus: "{{ janus_version }}"
       libnice: "{{ janus_libnice_version }}"
