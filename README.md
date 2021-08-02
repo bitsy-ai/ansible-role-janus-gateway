@@ -2,8 +2,7 @@ Ansible Role: Janus Gateway
 =========
 
 ![Tests](https://img.shields.io/github/workflow/status/bitsy-ai/ansible-role-janus-gateway/Molecule)
-![Commit Activity](https://img.shields.io/github/commit-activity/m/bitsy-ai/ansible-role-janus-gateway)
-
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/bitsy-ai/ansible-role-janus-gateway)
 
 An Ansible role to install and configure [janus-gateway](https://github.com/meetecho/janus-gateway), a general-purpose WebRTC server.
 
