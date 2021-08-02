@@ -1,3 +1,5 @@
+# {{ ansible_managed }}
+
 general: {
 	# Specify which local IP address to bind to for media.
 	# If not set it will be automatically guessed from the system

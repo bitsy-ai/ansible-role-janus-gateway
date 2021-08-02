@@ -1,3 +1,5 @@
+# {{ ansible_managed }}
+
 # This configures the GELF event handler. Appending necessary headers 
 # and sending messages via TCP or UDP
 

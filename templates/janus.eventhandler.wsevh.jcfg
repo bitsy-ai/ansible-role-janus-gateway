@@ -1,3 +1,5 @@
+# {{ ansible_managed }}
+
 # This configures the WebSockets event handler. Since this plugin only
 # forwards each event it receives via WebSockets, you simply need to
 # configure (i) which events to subscribe to, and (ii) the address of
