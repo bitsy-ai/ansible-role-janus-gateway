@@ -4,7 +4,7 @@
   git:
     repo: "{{ janus_libwebsockets_repo }}"
     dest: "{{ janus_libwebsockets_build_dir }}"
-    version: "{{ janus_libwebsockets_build_version }}"
+    version: "{{ janus_libwebsockets_version }}"
 
 - name: Create build dir
   file:
@@ -15,18 +15,20 @@
   command:
     cmd: cmake -DLWS_MAX_SMP=1 -DLWS_WITHOUT_EXTENSIONS=0 -DCMAKE_INSTALL_PREFIX:PATH=/usr/local -DCMAKE_C_FLAGS="-fpic" ..
     chdir: "{{ janus_libwebsockets_build_dir }}/build"
-  when: janus_websockets_installed_version is not defined or janus_websockets_installed_version != janus_websockets_build_version
+  when: janus_libwebsockets_installed_version is not defined or janus_libwebsockets_installed_version != janus_libwebsockets_version
 
 - name: Make websockets library
   command:
     cmd: make
     chdir: "{{ janus_libwebsockets_build_dir }}/build"
+  when: janus_libwebsockets_installed_version is not defined or janus_libwebsockets_installed_version != janus_libwebsockets_version
 
 - name: Install websockets library
   command:
     cmd: make install
     chdir: "{{ janus_libwebsockets_build_dir }}/build"
+  when: janus_libwebsockets_installed_version is not defined or janus_libwebsockets_installed_version != janus_libwebsockets_version
 
 - ansible.builtin.set_fact:
-    janus_websockets_installed_version:  "{{ janus_websockets_build_version }}"
-  when: janus_websockets_installed_version is not defined or janus_websockets_installed_version != janus_websockets_build_version
+    janus_libwebsockets_installed_version:  "{{ janus_libwebsockets_version }}"
+    cacheable: yes

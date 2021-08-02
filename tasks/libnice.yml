@@ -11,27 +11,27 @@
   git:
     repo: "{{ janus_libnice_repo }}"
     dest: "{{ janus_libnice_build_dir }}"
-    version: "{{ janus_libnice_build_version }}"
-  when: janus_libnice_installed_version is not defined or janus_libnice_installed_version != janus_libnice_build_version
+    version: "{{ janus_libnice_version }}"
 
 - name: Run libnice meson build
   command:
     cmd: "meson --prefix={{ janus_lib_prefix }} build"
     chdir: "{{ janus_libnice_build_dir }}"
-  when: janus_libnice_installed_version is not defined or janus_libnice_installed_version != janus_libnice_build_version
+  when: janus_libnice_installed_version is not defined or janus_libnice_installed_version != janus_libnice_version
 
 - name: Configure libnice ninja build
   command:
     cmd: ninja -C build
     chdir: "{{ janus_libnice_build_dir }}"
-  when: janus_libnice_installed_version is not defined or janus_libnice_installed_version != janus_libnice_build_version
+  when: janus_libnice_installed_version is not defined or janus_libnice_installed_version != janus_libnice_version
 
 - name: Install libnice
   command:
     cmd: ninja -C build install
     chdir: "{{ janus_libnice_build_dir }}"
-  when: janus_libnice_installed_version is not defined or janus_libnice_installed_version != janus_libnice_build_version
+  when: janus_libnice_installed_version is not defined or janus_libnice_installed_version != janus_libnice_version
 
 - ansible.builtin.set_fact:
-    janus_libnice_installed_version:  "{{ janus_libnice_build_version }}"
-  when: janus_libnice_installed_version is not defined or janus_libnice_installed_version != janus_usrsctp_build_version
+    janus_libnice_installed_version:  "{{ janus_libnice_version }}"
+    cacheable: yes
+  when: janus_libnice_installed_version is not defined or janus_libnice_installed_version != janus_libnice_version

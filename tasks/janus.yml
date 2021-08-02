@@ -4,31 +4,31 @@
   git:
     repo: "{{ janus_repo }}"
     dest: "{{ janus_build_dir}}"
-    version: "{{ janus_build_version }}"
+    version: "{{ janus_version }}"
 
 - name: Run janus-gateway config autogen
   command:
     cmd: sh autogen.sh
     chdir: "{{ janus_build_dir }}"
-  when: janus_installed_version is not defined or janus_installed_version!= janus_build_version
+  when: janus_installed_version is not defined or janus_installed_version!= janus_version
 
 - name: Configure janus-gateway build
   command:
     cmd: "./configure --prefix={{ janus_install_dir }} --disable-rabbitmq --disable-mqtt"
     chdir: "{{ janus_build_dir }}"
-  when: janus_installed_version is not defined or janus_installed_version!= janus_build_version
+  when: janus_installed_version is not defined or janus_installed_version!= janus_version
 
 - name: Build janus-gateway
   command:
     cmd: make
     chdir: "{{ janus_build_dir }}"
-  when: janus_installed_version is not defined or janus_installed_version!= janus_build_version
+  when: janus_installed_version is not defined or janus_installed_version!= janus_version
 
 - name: Install janus-gateway
   command:
     cmd: make install
     chdir: "{{ janus_build_dir }}"
-  when: janus_installed_version is not defined or janus_installed_version!= janus_build_version
+  when: janus_installed_version is not defined or janus_installed_version!= janus_version
 
 - name: Render janus-gateway config templates
   ansible.builtin.template:
@@ -37,5 +37,5 @@
   with_dict: "{{ janus_conf_template }}"
 
 - ansible.builtin.set_fact:
-    janus_installed_version:  "{{ janus_build_version }}"
-  when: janus_installed_version is not defined or janus_installed_version!= janus_build_version
+    janus_installed_version:  "{{ janus_version }}"
+    cacheable: yes

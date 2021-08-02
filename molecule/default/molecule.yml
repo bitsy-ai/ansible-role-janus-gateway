@@ -10,6 +10,12 @@ platforms:
 provisioner:
   name: ansible
   log: true
+  config_options:
+    defaults:
+      gathering: smart
+      fact_caching: jsonfile
+      fact_caching_connection: /tmp/facts_cache
+      fact_caching_timeout: 7200
 verifier:
   name: ansible
   
