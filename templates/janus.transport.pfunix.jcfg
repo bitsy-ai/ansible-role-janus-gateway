@@ -1,3 +1,5 @@
+# {{ ansible_managed }}
+
 # You can also control a Janus instance using Unix Sockets. The only
 # aspect you need to configure here is the path of the Unix Sockets
 # server. Notice that by default the interface is disabled, as you need

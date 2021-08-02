@@ -1,3 +1,5 @@
+# {{ ansible_managed }}
+
 # events = true|false, whether events should be sent to event handlers
 
 general: {

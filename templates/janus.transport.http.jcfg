@@ -1,3 +1,5 @@
+# {{ ansible_managed }}
+
 # Web server stuff: whether any should be enabled, which ports they
 # should use, whether security should be handled directly or demanded to
 # an external application (e.g., web frontend) and what should be the

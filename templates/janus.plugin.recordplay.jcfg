@@ -1,3 +1,5 @@
+# {{ ansible_managed }}
+
 # path = where to place recordings in the file system
 # events = true|false, whether events should be sent to event handlers
 

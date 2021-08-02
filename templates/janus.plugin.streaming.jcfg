@@ -1,3 +1,5 @@
+# {{ ansible_managed }}
+
 # stream-name: {
 # type = rtp|live|ondemand|rtsp
 #        rtp = stream originated by an external tool (e.g., gstreamer or

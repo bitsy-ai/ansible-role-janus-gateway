@@ -1,3 +1,5 @@
+# {{ ansible_managed }}
+
 # room-<unique room ID>: {
 # description = This is my awesome room
 # is_private = true|false (whether this room should be in the public list, default=true)

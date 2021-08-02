@@ -2,26 +2,28 @@
 # Build libnice
 
 - name: Install meson and ninja build systems
-  command: python3 -m pip install meson ninja
+  ansible.builtin.pip:
+    name:
+      - meson 
+      - ninja
 
 - name: Clone libnice
   git:
     repo: "{{ janus_libnice_repo }}"
-    dest: "{{ janus_libnice_dir }}"
+    dest: "{{ janus_libnice_build_dir }}"
     version: "{{ janus_libnice_version }}"
 
 - name: Run libnice meson build
   command:
-    cmd: meson --prefix=/usr build
-    chdir: "{{ janus_libnice_dir }}"
+    cmd: "meson --prefix={{ janus_lib_prefix }} build"
+    chdir: "{{ janus_libnice_build_dir }}"
 
 - name: Configure libnice ninja build
   command:
     cmd: ninja -C build
-    chdir: "{{ janus_libnice_dir }}"
+    chdir: "{{ janus_libnice_build_dir }}"
 
 - name: Install libnice
   command:
     cmd: ninja -C build install
-    chdir: "{{ janus_libnice_dir }}"
-
+    chdir: "{{ janus_libnice_build_dir }}"

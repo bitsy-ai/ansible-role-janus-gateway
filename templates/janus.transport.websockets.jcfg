@@ -1,3 +1,5 @@
+# {{ ansible_managed }}
+
 # WebSockets stuff: whether they should be enabled, which ports they
 # should use, and so on.
 general: {

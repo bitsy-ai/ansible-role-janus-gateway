@@ -1,3 +1,5 @@
+# {{ ansible_managed }}
+
 # path = where to place recordings in the file system (should be in a
 #	properly configured web server, if you want the demo to work)
 # base = base path to use when returning the recording URI (use this
