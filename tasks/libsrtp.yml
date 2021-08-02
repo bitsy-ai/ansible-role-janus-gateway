@@ -2,26 +2,33 @@
 
 - name: Create libsrtp table
   ansible.builtin.file:
-    path: "{{ janus_libsrtp_dir }}"
+    path: "{{ janus_libsrtp_build_dir }}"
     state: directory
 
 - name: Download and unarchive libsrtp 
   ansible.builtin.unarchive:
     src: '{{ janus_libsrtp_tarball }}'
-    dest: '{{ janus_build_dir }}'
+    dest: '{{ janus_workspace_dir }}'
     remote_src: yes
 
 - name: Configure libsrtp
   command:
-    cmd: ./configure --prefix=/usr --enable-openssl
-    chdir: "{{ janus_libsrtp_dir }}"
+    cmd: "./configure --prefix={{ janus_lib_prefix }} --enable-openssl"
+    chdir: "{{ janus_libsrtp_build_dir }}"
+  when: janus_libsrtp_installed_version is not defined or janus_libsrtp_installed_version != janus_libsrtp_build_version
 
 - name: Build libsrtp
   command:
     cmd:  make shared_library
-    chdir: "{{ janus_libsrtp_dir }}"
+    chdir: "{{ janus_libsrtp_build_dir }}"
+  when: janus_libsrtp_installed_version is not defined or janus_libsrtp_installed_version != janus_libsrtp_build_version
 
 - name: Install libsrtp
   command:
     cmd: make install
-    chdir: "{{ janus_libsrtp_dir }}"
+    chdir: "{{ janus_libsrtp_build_dir }}"
+  when: janus_libsrtp_installed_version is not defined or janus_libsrtp_installed_version != janus_libsrtp_build_version
+
+- ansible.builtin.set_fact:
+    janus_libsrtp_installed_version:  "{{ janus_libsrtp_build_version }}"
+  when: janus_libsrtp_installed_version is not defined or janus_libsrtp_installed_version != janus_libsrtp_build_version

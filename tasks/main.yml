@@ -5,9 +5,22 @@
   tags:
     janus-gateway
 
+# Build notes
+# Libs conforming to Debian Multiarch are installed to /usr/local/lib/$(gcc -dumpmachine)/
+# https://wiki.debian.org/Multiarch
+
+- name: Register gcc machine arch
+  command:
+    cmd: gcc -dumpmachine
+  register: gcc_dumpmachine
+  changed_when: False # disable idempotency check (expected to always run)
+
+- ansible.builtin.set_fact:
+    gcc_dumpmachine: "{{ gcc_dumpmachine.stdout }}"
+
 - name: Create workspace
   ansible.builtin.file :
-    path: "{{ janus_build_dir }}"
+    path: "{{ janus_workspace_dir }}"
     state: directory
 
 - name: Install libnice
@@ -34,3 +47,8 @@
   import_tasks: janus.yml
   tags:
     janus-gateway
+
+# - name: Create workspace
+#   ansible.builtin.file :
+#     path: "{{ janus_workspace_dir }}"
+#     state: absent

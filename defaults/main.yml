@@ -7,27 +7,29 @@ janus_build_extras:
   mqtt: false
   nanomsg: false
 
-janus_build_dir: /opt/workspace
-janus_install_dir: /opt/janus
+janus_workspace_dir: /opt/workspace
+janus_install_dir: /usr/local/janus
+janus_lib_prefix: /usr/local
 
-janus_libwebsockets_dir: "{{ janus_build_dir }}/libwebsockets"
+janus_libwebsockets_build_dir: "{{ janus_workspace_dir }}/libwebsockets"
 janus_libwebsockets_repo: https://libwebsockets.org/repo/libwebsockets
-janus_libwebsockets_version: v3.2-stable
+janus_libwebsockets_build_version: v3.2-stable
 
-janus_libnice_dir:  "{{ janus_build_dir }}/libnice"
+janus_libnice_build_dir:  "{{ janus_workspace_dir }}/libnice"
 janus_libnice_repo: https://gitlab.freedesktop.org/libnice/libnice
-janus_libnice_version: master
+janus_libnice_build_version: master
 
-janus_usrsctp_dir: "{{ janus_build_dir }}/usrsctp"
+janus_usrsctp_build_dir: "{{ janus_workspace_dir }}/usrsctp"
 janus_usrsctp_repo: https://github.com/sctplab/usrsctp
-janus_usrsctp_version: master
+janus_usrsctp_build_version: master
 
-janus_libsrtp_tarball: https://github.com/cisco/libsrtp/archive/v2.2.0.tar.gz
-janus_libsrtp_dir: "{{ janus_build_dir }}/libsrtp-2.2.0"
+janus_libsrtp_build_version: "2.2.0"
+janus_libsrtp_tarball: "https://github.com/cisco/libsrtp/archive/v{{ janus_libsrtp_build_version }}.tar.gz"
+janus_libsrtp_build_dir: "{{ janus_workspace_dir }}/libsrtp-{{ janus_libsrtp_build_version }}"
 
-janus_gateway_dir: "{{ janus_build_dir }}/janus-gateway"
-janus_gateway_repo: https://github.com/meetecho/janus-gateway.git
-janus_gateway_version: v0.11.3
+janus_build_dir: "{{ janus_workspace_dir }}/janus-gateway"
+janus_repo: https://github.com/meetecho/janus-gateway.git
+janus_build_version: v0.11.3
 
 
 janus_conf_dir: "{{ janus_install_dir }}/etc/janus/"
