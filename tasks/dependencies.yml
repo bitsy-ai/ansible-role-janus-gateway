@@ -1,6 +1,7 @@
 ---
 # tasks file for ansible-role-janus-gateway
 - name: Install required platform dependencies
+  become: true
   apt:
     update_cache: true
     name:
@@ -22,6 +23,8 @@
       - git
       - python3-pip
       - wget
+      - systemd 
+      - systemd-cron
     state: present
   tags:
     janus-gateway
@@ -48,6 +51,7 @@
     janus-gateway
 
 - name: Install libwebsockets dependencies
+  become: true
   when: janus_build_extras['websockets']
   apt:
     name:

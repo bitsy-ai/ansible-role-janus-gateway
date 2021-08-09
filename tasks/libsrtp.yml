@@ -1,16 +1,18 @@
 ---
 
 - name: Create libsrtp workspace
+
   ansible.builtin.file:
     path: "{{ janus_libsrtp_build_dir }}"
     state: directory
-    mode: 0644
-    
-- name: Download and unarchive libsrtp 
+    mode: 0770
+
+- name: Download and unarchive libsrtp
   ansible.builtin.unarchive:
     src: '{{ janus_libsrtp_tarball }}'
     dest: '{{ janus_workspace_dir }}'
     remote_src: yes
+    mode: 0770
 
 - name: Configure libsrtp
   command:
@@ -25,6 +27,7 @@
   when: janus_upgrade_available
 
 - name: Install libsrtp
+  become: true
   command:
     cmd: make install
     chdir: "{{ janus_libsrtp_build_dir }}"

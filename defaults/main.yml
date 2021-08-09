@@ -14,7 +14,9 @@ janus_installed_versions:
   libsrtp: null
   libwebsockets: null
 
-janus_workspace_dir: /opt/workspace
+janus_user: janus
+janus_group: janus
+janus_workspace_dir: "{{ ansible_env.HOME }}/workspace"
 janus_install_dir: /opt/janus
 janus_lib_prefix: /usr/local
 

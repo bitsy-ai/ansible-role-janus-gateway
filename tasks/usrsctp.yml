@@ -25,6 +25,7 @@
   when: janus_upgrade_available
 
 - name: Install usrsctp
+  become: true
   command:
     cmd: make install
     chdir: "{{ janus_usrsctp_build_dir }}"

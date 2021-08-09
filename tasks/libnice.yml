@@ -6,6 +6,8 @@
     name:
       - meson 
       - ninja
+    umask: "0022"
+  become: True
 
 - name: Clone libnice
   git:
@@ -26,6 +28,7 @@
   when: janus_upgrade_available
 
 - name: Install libnice
+  become: true
   command:
     cmd: ninja -C build install
     chdir: "{{ janus_libnice_build_dir }}"

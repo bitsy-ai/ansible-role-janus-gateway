@@ -8,7 +8,7 @@
   ansible.builtin.file:
     path: "{{ janus_workspace_dir }}"
     state: directory
-    mode: 0644
+    mode: 0770
 - name: Install libnice
   import_tasks: libnice.yml
   tags:
@@ -49,12 +49,14 @@
   when: janus_upgrade_available
 
 - name: Build janus-gateway
+  become: true
   command:
     cmd: make
     chdir: "{{ janus_build_dir }}"
   when: janus_upgrade_available
 
 - name: Install janus-gateway
+  become: true
   command:
     cmd: make install
     chdir: "{{ janus_build_dir }}"
