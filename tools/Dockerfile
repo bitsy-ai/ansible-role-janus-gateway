@@ -4,7 +4,8 @@ LABEL maintainer="Bitsy AI Labs"
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update && \
     apt-get install -y \
-        python3 python3-pip sudo bash ca-certificates iproute2 python3-apt systemd aptitude && \
+        python3 python3-pip \
+        sudo bash ca-certificates iproute2 python3-apt systemd systemd-sysv aptitude && \
     apt-get clean && rm -rf /var/lib/apt/lists/*;
 
 ARG ANSIBLE_VERSION="4.3.0"
