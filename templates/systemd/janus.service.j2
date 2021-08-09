@@ -1,0 +1,16 @@
+[Unit]
+Description=Janus Gateway
+Requires=network.target
+After=syslog.target network.target
+
+[Service]
+Type=forking
+User={{ janus_user }}
+WorkingDirectory={{ janus_install_dir }}
+Environment="JANUS_PID_FILE={{ janus_install_dir }}/janus.pid"
+ExecStart={{ janus_install_dir }}/bin/janus \
+    --daemonize \
+    --pid-file=$JANUS_PID_FILE \
+    --cwd-path={{ janus_install_dir }}
+[Install]
+WantedBy=multi-user.target
