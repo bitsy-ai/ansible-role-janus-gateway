@@ -24,4 +24,4 @@ RUN pip3 install "ansible==${ANSIBLE_VERSION}"
 # Allows for testing init systems
 # non-privileged container mounts with :ro
 VOLUME ["/sys/fs/cgroup"]
-CMD ["/sbin/init"]
+CMD ["/lib/systemd/systemd"]

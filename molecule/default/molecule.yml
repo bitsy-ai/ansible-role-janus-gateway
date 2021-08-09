@@ -10,8 +10,9 @@ platforms:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     pre_build_image: true
-    command: /sbin/init
-    priviledged: true
+    command: "/lib/systemd/systemd"
+    capabilities:
+      - SYS_ADMIN
     tmpfs:
       - /run
       - /tmp
