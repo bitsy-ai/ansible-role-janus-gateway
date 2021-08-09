@@ -36,5 +36,3 @@
   import_tasks: systemd.yml
   tags:
     janus-gateway
-  notify:
-    - restart janus service

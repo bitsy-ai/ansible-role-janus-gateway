@@ -11,6 +11,9 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     pre_build_image: true
     command: /sbin/init
+    tmpfs:
+      - /run
+      - /tmp
 provisioner:
   name: ansible
   log: true

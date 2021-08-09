@@ -26,7 +26,7 @@ janus_libwebsockets_version: v3.2-stable
 
 janus_libnice_build_dir:  "{{ janus_workspace_dir }}/libnice"
 janus_libnice_repo: https://github.com/libnice/libnice
-janus_libnice_version: ba47c6ccc312f27f207bce007569588698bdc17f
+janus_libnice_version: "0.1.18"
 
 janus_usrsctp_build_dir: "{{ janus_workspace_dir }}/usrsctp"
 janus_usrsctp_repo: https://github.com/sctplab/usrsctp
