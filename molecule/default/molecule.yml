@@ -11,6 +11,7 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     pre_build_image: true
     command: /sbin/init
+    priviledged: true
     tmpfs:
       - /run
       - /tmp
