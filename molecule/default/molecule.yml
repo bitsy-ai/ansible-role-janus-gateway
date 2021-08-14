@@ -9,13 +9,10 @@ platforms:
     image: bitsyai/debian:buster-20210721-slim
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
     pre_build_image: true
-    command: "/lib/systemd/systemd"
-    capabilities:
-      - SYS_ADMIN
-    tmpfs:
-      - /run
-      - /tmp
+    command: /sbin/init
+
 provisioner:
   name: ansible
   log: true

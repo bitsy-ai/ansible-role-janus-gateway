@@ -18,7 +18,10 @@ janus_user: janus
 janus_group: janus
 janus_workspace_dir: "{{ ansible_env.HOME }}/workspace"
 janus_install_dir: /opt/janus
+janus_configs_dir: "{{ janus_install_dir }}/etc/janus"
+janus_logs_dir: /var/log/janus/janus.log
 janus_lib_prefix: /usr/local
+janus_pid_file: /var/run/janus/janus.pid
 
 janus_libwebsockets_build_dir: "{{ janus_workspace_dir }}/libwebsockets"
 janus_libwebsockets_repo: https://github.com/warmcat/libwebsockets.git
@@ -66,7 +69,6 @@ janus_conf_var:
     session_timeout: 60
     candidates_timeout: 45
     reclaim_session_timeout: 0
-    recordings_tmp_ext: mjr
     no_webrtc_encryption: false
     
 janus_conf_template:
