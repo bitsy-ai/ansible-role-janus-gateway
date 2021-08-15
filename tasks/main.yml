@@ -29,7 +29,7 @@
   ansible.builtin.template:
     mode: 0664
     src: "{{ item.value }}"
-    dest: "{{ janus_conf_dir }}{{ item.value }}"
+    dest: "{{ janus_conf_dir }}/{{ item.value }}"
   with_dict: "{{ janus_conf_template }}"
 
 - name: Janus systemd unit
