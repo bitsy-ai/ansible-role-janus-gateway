@@ -18,8 +18,8 @@ janus_user: janus
 janus_group: janus
 janus_workspace_dir: "{{ ansible_env.HOME }}/workspace"
 janus_install_dir: /opt/janus
-janus_configs_dir: "{{ janus_install_dir }}/etc/janus"
-janus_logs_dir: /var/log/janus/janus.log
+janus_conf_dir: "{{ janus_install_dir }}/etc/janus"
+janus_log_file: /var/log/janus/janus.log
 janus_lib_prefix: /usr/local
 janus_pid_file: /var/run/janus/janus.pid
 
@@ -48,11 +48,8 @@ janus_api_secret: null
 janus_token_auth_secret: null
 janus_admin_secret: null
 
-janus_conf_dir: "{{ janus_install_dir }}/etc/janus/"
-
-
 janus_conf_var:
-  janus.jcfg:
+  janus:
     plugins_folder: "{{ janus_install_dir }}/lib/janus/plugins"
     transports_folder: "{{ janus_install_dir }}/lib/janus/transports"
     events_folder: "{{ janus_install_dir }}/lib/janus/events"
@@ -70,7 +67,18 @@ janus_conf_var:
     candidates_timeout: 45
     reclaim_session_timeout: 0
     no_webrtc_encryption: false
-    
+  janus.transport.http:
+    admin_base_path: "/admin"
+    admin_http_port: 7088
+    admin_https_port: 7889
+    admin_http: true
+    admin_https: false
+    base_path: "/janus"
+    https: false
+    https_port: 8089
+    http: true
+    http_port: 8088
+
 janus_conf_template:
   janus.eventhandler.gelfevh.jcfg: janus.eventhandler.gelfevh.jcfg
   janus.eventhandler.sampleevh.jcfg: janus.eventhandler.sampleevh.jcfg
