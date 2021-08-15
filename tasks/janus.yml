@@ -48,13 +48,13 @@
   command:
     cmd: "./configure \
       --prefix={{ janus_install_dir }} \
-      {{ janus_build_extras.rabbitmq ? '' : '--disable-rabbitmq' }} \
-      {{ janus_build_extras.mqtt ? '' : '' : --disable-mqtt }} \
-      {{ janus_build_extras.websockets ? '' : ''--disable-websockets }} \
-      {{ janus_build_extras.nanomsg ? '' : ''--disable-nanomsg }} \
-      {{ janus_build_extras.systemd ? '--enable-systemd-sockets' : '' }} \
-      {{ janus_build_extras.recordplay ? '' : '--disable-plugin-recordplay' }} \
-      {{ janus_build_extras.sip ? '' : '--disable-plugin-sip' }}"
+      {{ janus_build_extras.rabbitmq | ternary('', '--disable-rabbitmq') }} \
+      {{ janus_build_extras.mqtt | ternary('', '--disable-mqtt') }} \
+      {{ janus_build_extras.websockets | ternary('', '--disable-websockets') }} \
+      {{ janus_build_extras.nanomsg | ternary('', '--disable-nanomsg') }} \
+      {{ janus_build_extras.systemd | ternary('--enable-systemd-sockets', '') }} \
+      {{ janus_build_extras.recordplay | ternary('', '--disable-plugin-recordplay') }} \
+      {{ janus_build_extras.sip | ternary('', '--disable-plugin-sip') }}"
       
     chdir: "{{ janus_build_dir }}"
   when: janus_upgrade_available
