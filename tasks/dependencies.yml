@@ -1,26 +1,45 @@
 ---
 # tasks file for ansible-role-janus-gateway
 - name: Install required platform dependencies
+  become: true
   apt:
     update_cache: true
     name:
-      - libmicrohttpd-dev
-      - libjansson-dev
-      - libssl-dev
-      - libsofia-sip-ua-dev
-      - libglib2.0-dev
-      - libopus-dev
-      - libogg-dev
-      - libcurl4-openssl-dev
-      - liblua5.3-dev
-      - libconfig-dev
-      - pkg-config
-      - gengetopt
-      - libtool
       - automake
       - build-essential
+      - cmake
+      - cmake-data
+      - gengetopt
       - git
+      - gstreamer1.0-doc
+      - gstreamer1.0-libav
+      - gstreamer1.0-plugins-bad
+      - gstreamer1.0-plugins-base
+      - gstreamer1.0-plugins-good
+      - gstreamer1.0-plugins-ugly
+      - gstreamer1.0-tools
+      - gstreamer1.0-x
+      - libconfig-dev
+      - libcurl4-openssl-dev
+      - libglib2.0-dev
+      - libgstreamer-plugins-bad1.0-dev
+      - libgstreamer-plugins-base1.0-dev
+      - libgstreamer1.0-dev
+      - libjansson-dev
+      - liblua5.3-dev
+      - libmicrohttpd-dev
+      - libogg-dev
+      - libopus-dev
+      - libsofia-sip-ua-dev
+      - libssl-dev
+      - libsystemd-dev
+      - libtool
+      - ninja-build
+      - pkg-config
       - python3-pip
+      - python3-venv
+      - systemd 
+      - systemd-cron
       - wget
     state: present
   tags:
@@ -48,6 +67,7 @@
     janus-gateway
 
 - name: Install libwebsockets dependencies
+  become: true
   when: janus_build_extras['websockets']
   apt:
     name:

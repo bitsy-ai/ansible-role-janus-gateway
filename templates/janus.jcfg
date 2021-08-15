@@ -7,19 +7,19 @@
 # between application(s) and Janus.
 general: {
 	configs_folder = "{{ janus_conf_dir }}"			# Configuration files folder
-	plugins_folder = "{{ janus_conf_var['janus.jcfg']['plugins_folder'] }}"			# Plugins folder
-	transports_folder = "{{ janus_conf_var['janus.jcfg']['transports_folder'] }}"	# Transports folder
-	events_folder = "{{ janus_conf_var['janus.jcfg']['events_folder'] }}"			# Event handlers folder
-	loggers_folder = "{{ janus_conf_var['janus.jcfg']['loggers_folder'] }}"		# External loggers folder
+	plugins_folder = "{{ janus_conf_var['janus']['plugins_folder'] }}"			# Plugins folder
+	transports_folder = "{{ janus_conf_var['janus']['transports_folder'] }}"	# Transports folder
+	events_folder = "{{ janus_conf_var['janus']['events_folder'] }}"			# Event handlers folder
+	loggers_folder = "{{ janus_conf_var['janus']['loggers_folder'] }}"		# External loggers folder
 
-	log_to_stdout = "{{ janus_conf_var['janus.jcfg']['log_to_stdout'] }}"					# Whether the Janus output should be written
+	log_to_stdout = "{{ janus_conf_var['janus']['log_to_stdout'] }}"					# Whether the Janus output should be written
 											# to stdout or not (default=true)
-	#log_to_file = "/path/to/janus.log"		# Whether to use a log file or not
-	debug_level = "{{ janus_conf_var['janus.jcfg']['debug_level'] }}"							# Debug/logging level, valid values are 0-7
+	log_to_file = "{{ janus_log_file }}		# Whether to use a log file or not
+	debug_level = "{{ janus_conf_var['janus']['debug_level'] }}"							# Debug/logging level, valid values are 0-7
 	#debug_timestamps = true				# Whether to show a timestamp for each log line
 	#debug_colors = false					# Whether colors should be disabled in the log
 	#debug_locks = true						# Whether to enable debugging of locks (very verbose!)
-	#log_prefix = "[janus] "				# In case you want log lines to be prefixed by some
+	log_prefix = "[janus] "				# In case you want log lines to be prefixed by some
 											# custom text, you can use the 'log_prefix' property.
 											# It supports terminal colors, meaning something like
 											# "[\x1b[32mjanus\x1b[0m] " would show a green "janus"
@@ -28,12 +28,12 @@ general: {
 		# This is what you configure if you want to launch Janus as a daemon
 	#daemonize = true						# Whether Janus should run as a daemon
 											# or not (default=run in foreground)
-	#pid_file = "{{ janus_conf_var['janus.jcfg']['pid_file'] }}"		
+	pid_file = "{{ janus_pid_file }}"		
     # PID file to create when Janus has been
 	# started, and to destroy at shutdown
 
 		# There are different ways you can authenticate the Janus and Admin APIs
-	#api_secret = "{{ janus_conf_var['janus.jcfg']['api_secret'] }}"
+	api_secret = "{{ janus_conf_var['janus']['api_secret'] }}"
                                     # String that all Janus requests must contain
 									# to be accepted/authorized by the Janus core.
 									# Useful if you're wrapping all Janus API requests
@@ -41,18 +41,18 @@ general: {
 									# where you do the things your way) and you
 									# don't want other application to mess with
 									# this Janus instance.
-	token_auth = "{{ janus_conf_var['janus.jcfg']['token_auth'] }}"				
+	token_auth = "{{ janus_conf_var['janus']['token_auth'] }}"				
                                     # Enable a token based authentication
 									# mechanism to force users to always provide
 									# a valid token in all requests. Useful if
 									# you want to authenticate requests from web
 									# users.
-	#token_auth_secret = "{{ janus_conf_var['janus.jcfg']['token_auth_secret'] }}"		
+	token_auth_secret = "{{ janus_conf_var['janus']['token_auth_secret'] }}"		
                                     # Use HMAC-SHA1 signed tokens (with token_auth). Note that
 									# without this, the Admin API MUST
 									# be enabled, as tokens are added and removed
 									# through messages sent there.
-	admin_secret = "{{ janus_conf_var['janus.jcfg']['admin_secret'] }}"	
+	admin_secret = "{{ janus_conf_var['janus']['admin_secret'] }}"	
                                     # String that all Janus requests must contain
 									# to be accepted/authorized by the admin/monitor.
 									# only needed if you enabled the admin API
@@ -60,10 +60,10 @@ general: {
 
 		# Generic settings
 	#interface = "1.2.3.4"			# Interface to use (will be used in SDP)
-	server_name = "{{  janus_conf_var['janus.jcfg']['server_name'] }}"
+	server_name = "{{  janus_conf_var['janus']['server_name'] }}"
                                     # Public name of this Janus instance
 									# as it will appear in an info request
-	session_timeout = {{ janus_conf_var['janus.jcfg']['session_timeout'] }}			# How long (in seconds) we should wait before
+	session_timeout = {{ janus_conf_var['janus']['session_timeout'] }}			# How long (in seconds) we should wait before
 									# deciding a Janus session has timed out. A
 									# session times out when no request is received
 									# for session_timeout seconds (default=60s).
@@ -72,13 +72,13 @@ general: {
 									# risk having orphaned sessions (sessions not
 									# controlled by any transport and never freed).
 									# To avoid timeouts, keep-alives can be used.
-	candidates_timeout = {{ janus_conf_var['janus.jcfg']['candidates_timeout'] }}	
+	candidates_timeout = {{ janus_conf_var['janus']['candidates_timeout'] }}	
                             		# How long (in seconds) we should keep hold of
 									# pending (trickle) candidates before discarding
 									# them (default=45s). Notice that setting this
 									# to 0 will NOT disable the timeout, but will
 									# be considered an invalid value and ignored.
-	reclaim_session_timeout = {{ janus_conf_var['janus.jcfg']['reclaim_session_timeout'] }}
+	reclaim_session_timeout = {{ janus_conf_var['janus']['reclaim_session_timeout'] }}
                                     # How long (in seconds) we should wait for a
 									# janus session to be reclaimed after the transport
 									# is gone. After the transport is gone, a session
@@ -88,7 +88,6 @@ general: {
 									# mechanism, and sessions will be destroyed immediately
 									# if the transport is gone.
 	#recordings_tmp_ext = "tmp"
-    recordings_tmp_ext = {{ janus_conf_var['janus.jcfg']['recordings_tmp_ext'] }}	
                                     # The extension for recordings, in Janus, is
 									# .mjr, a custom format we devised ourselves.
 									# By default, we save to .mjr directly. If you'd
@@ -135,7 +134,7 @@ general: {
 		# The following is ONLY useful when debugging RTP/RTCP packets,
 		# e.g., to look at unencrypted live traffic with a browser. By
 		# default it is obviously disabled, as WebRTC mandates encryption.
-	no_webrtc_encryption = {{ janus_conf_var['janus.jcfg']['no_webrtc_encryption'] }}
+	no_webrtc_encryption = {{ janus_conf_var['janus']['no_webrtc_encryption'] }}
 
 		# Janus provides ways via its API to specify custom paths to save
 		# files to (e.g., recordings, pcap captures and the like). In order
@@ -369,7 +368,7 @@ nat: {
 	# your machine is ready. Note that Linux distributions offer such directives.
 	# You could use the following directive in systemd: 'After=network-online.target'
 	# https://www.freedesktop.org/software/systemd/man/systemd.unit.html#Before=
-	#ignore_unreachable_ice_server = true
+	ignore_unreachable_ice_server = {{ janus_conf_var['janus']['ignore_unreachable_ice_server'] }}
 }
 
 # You can choose which of the available plugins should be

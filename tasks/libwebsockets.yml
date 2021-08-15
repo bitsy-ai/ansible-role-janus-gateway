@@ -5,26 +5,22 @@
     dest: "{{ janus_libwebsockets_build_dir }}"
     version: "{{ janus_libwebsockets_version }}"
 
-- name: Create build dir
-  file:
-    path: "{{ janus_libwebsockets_build_dir }}/build"
-    state: directory
-    mode: 0644
 
 - name: Make websockets build configs
   command:
-    cmd: cmake -DLWS_MAX_SMP=1 -DLWS_WITHOUT_EXTENSIONS=0 -DCMAKE_INSTALL_PREFIX:PATH=/usr/local -DCMAKE_C_FLAGS="-fpic" ..
-    chdir: "{{ janus_libwebsockets_build_dir }}/build"
+    cmd: cmake -DLWS_MAX_SMP=1 -DLWS_WITHOUT_EXTENSIONS=0 -DCMAKE_INSTALL_PREFIX:PATH=/usr -DCMAKE_C_FLAGS="-fpic" .
+    chdir: "{{ janus_libwebsockets_build_dir }}"
   when: janus_upgrade_available
 
 - name: Make websockets library
   command:
     cmd: make
-    chdir: "{{ janus_libwebsockets_build_dir }}/build"
+    chdir: "{{ janus_libwebsockets_build_dir }}"
   when: janus_upgrade_available
 
 - name: Install websockets library
+  become: true
   command:
     cmd: make install
-    chdir: "{{ janus_libwebsockets_build_dir }}/build"
+    chdir: "{{ janus_libwebsockets_build_dir }}"
   when: janus_upgrade_available

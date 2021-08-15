@@ -8,16 +8,18 @@
   ansible.builtin.file:
     path: "{{ janus_workspace_dir }}"
     state: directory
-    mode: 0644
+    mode: "770"
+    recurse: true
+    
 - name: Install libnice
   import_tasks: libnice.yml
   tags:
     janus-gateway
 
-- name: Install usrsctp
-  import_tasks: usrsctp.yml
-  tags:
-    janus-gateway
+# - name: Install usrsctp
+#   import_tasks: usrsctp.yml
+#   tags:
+#     janus-gateway
 
 - name: Install libwebsockets
   import_tasks: libwebsockets.yml
@@ -44,17 +46,28 @@
 
 - name: Configure janus-gateway build
   command:
-    cmd: "./configure --prefix={{ janus_install_dir }} --disable-rabbitmq --disable-mqtt"
+    cmd: "./configure \
+      --prefix={{ janus_install_dir }} \
+      {{ janus_build_extras.rabbitmq | ternary('', '--disable-rabbitmq') }} \
+      {{ janus_build_extras.mqtt | ternary('', '--disable-mqtt') }} \
+      {{ janus_build_extras.websockets | ternary('', '--disable-websockets') }} \
+      {{ janus_build_extras.nanomsg | ternary('', '--disable-nanomsg') }} \
+      {{ janus_build_extras.systemd | ternary('--enable-systemd-sockets', '') }} \
+      {{ janus_build_extras.recordplay | ternary('', '--disable-plugin-recordplay') }} \
+      {{ janus_build_extras.sip | ternary('', '--disable-plugin-sip') }}"
+      
     chdir: "{{ janus_build_dir }}"
   when: janus_upgrade_available
 
 - name: Build janus-gateway
+  become: true
   command:
     cmd: make
     chdir: "{{ janus_build_dir }}"
   when: janus_upgrade_available
 
 - name: Install janus-gateway
+  become: true
   command:
     cmd: make install
     chdir: "{{ janus_build_dir }}"

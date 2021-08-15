@@ -5,7 +5,13 @@ driver:
   name: docker
 platforms:
   - name: debian10
-    image: debian:buster
+    hostname: debian10
+    image: bitsyai/debian:buster-20210721-slim
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+    command: /sbin/init
 
 provisioner:
   name: ansible
@@ -17,6 +23,10 @@ provisioner:
       fact_caching_connection: .tmp/facts_cache
       fact_caching_timeout: 7200
 
+  inventory:
+    host_vars:
+      debian10:
+        ansible_user: ansible
 lint: |
   set -e
   yamllint .

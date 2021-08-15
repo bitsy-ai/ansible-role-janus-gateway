@@ -10,6 +10,14 @@
     cacheable: yes
   when: not janus_api_secret or not janus_token_auth_secret or not janus_admin_secret
 
+- name: Create janus user
+  become: true
+  ansible.builtin.user:
+    name: "{{ janus_user }}"
+    shell: /bin/bash
+    groups: video
+    append: yes
+
 - name: Build janus-gateway from source
   import_tasks: janus.yml
   tags:
@@ -17,9 +25,14 @@
   when: janus_upgrade_available
 
 - name: Render janus-gateway config templates
+  become: true
   ansible.builtin.template:
-    mode: 0644
+    mode: 0664
     src: "{{ item.value }}"
-    dest: "{{ janus_conf_dir }}{{ item.value }}"
+    dest: "{{ janus_conf_dir }}/{{ item.value }}"
   with_dict: "{{ janus_conf_template }}"
-  
+
+- name: Janus systemd unit
+  import_tasks: systemd.yml
+  tags:
+    janus-gateway

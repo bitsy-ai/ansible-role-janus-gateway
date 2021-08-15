@@ -5,7 +5,8 @@
   ansible.builtin.pip:
     name:
       - meson 
-      - ninja
+    virtualenv: "{{ janus_workspace_dir }}/venv"
+    virtualenv_command: /usr/bin/python3.7 -m venv
 
 - name: Clone libnice
   git:
@@ -18,15 +19,22 @@
     cmd: "meson --prefix={{ janus_lib_prefix }} build"
     chdir: "{{ janus_libnice_build_dir }}"
   when: janus_upgrade_available
+  environment:
+    PATH: "{{ janus_workspace_dir }}/venv/bin:{{ ansible_env.PATH }}"
 
 - name: Configure libnice ninja build
   command:
-    cmd: ninja -C build
+    cmd: "ninja -C build"
     chdir: "{{ janus_libnice_build_dir }}"
   when: janus_upgrade_available
+  environment:
+    PATH: "{{ janus_workspace_dir }}/venv/bin:{{ ansible_env.PATH }}"
 
 - name: Install libnice
+  become: true
   command:
-    cmd: ninja -C build install
+    cmd: "ninja -C build install"
     chdir: "{{ janus_libnice_build_dir }}"
   when: janus_upgrade_available
+  environment:
+    PATH: "{{ janus_workspace_dir }}/venv/bin:{{ ansible_env.PATH }}"

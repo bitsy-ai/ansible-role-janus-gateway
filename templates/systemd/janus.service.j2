@@ -1,0 +1,22 @@
+[Unit]
+Description=Janus Gateway
+Requires=network.target
+After=syslog.target network.target network-online.target
+
+[Service]
+Type=simple
+User={{ janus_user }}
+RuntimeDirectory={{ janus_user }}
+LogsDirectory={{ janus_user }}
+RuntimeDirectoryMode=755
+WorkingDirectory={{ janus_install_dir }}
+Environment="LD_LIBRARY_PATH=LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib"
+ExecStart={{ janus_install_dir }}/bin/janus \
+    --cwd-path={{ janus_install_dir }} \
+    --configs-folder={{ janus_conf_dir }} \
+    --log-file={{ janus_log_file }}
+Restart=on-abnormal
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
