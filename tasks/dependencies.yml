@@ -32,14 +32,15 @@
       - libopus-dev
       - libsofia-sip-ua-dev
       - libssl-dev
+      - libsystemd-dev
       - libtool
+      - ninja-build
       - pkg-config
       - python3-pip
       - python3-venv
       - systemd 
       - systemd-cron
       - wget
-      - ninja-build
     state: present
   tags:
     janus-gateway

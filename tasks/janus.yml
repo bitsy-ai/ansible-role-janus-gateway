@@ -46,7 +46,16 @@
 
 - name: Configure janus-gateway build
   command:
-    cmd: "./configure --prefix={{ janus_install_dir }} --disable-rabbitmq --disable-mqtt"
+    cmd: "./configure \
+      --prefix={{ janus_install_dir }} \
+      {{ janus_build_extras.rabbitmq ? '' : '--disable-rabbitmq' }} \
+      {{ janus_build_extras.mqtt ? '' : '' : --disable-mqtt }} \
+      {{ janus_build_extras.websockets ? '' : ''--disable-websockets }} \
+      {{ janus_build_extras.nanomsg ? '' : ''--disable-nanomsg }} \
+      {{ janus_build_extras.systemd ? '--enable-systemd-sockets' : '' }} \
+      {{ janus_build_extras.recordplay ? '' : '--disable-plugin-recordplay' }} \
+      {{ janus_build_extras.sip ? '' : '--disable-plugin-sip' }}"
+      
     chdir: "{{ janus_build_dir }}"
   when: janus_upgrade_available
 

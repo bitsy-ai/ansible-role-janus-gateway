@@ -1,10 +1,10 @@
 [Unit]
 Description=Janus Gateway
 Requires=network.target
-After=syslog.target network.target
+After=syslog.target network.target network-online.target
 
 [Service]
-Type=forking
+Type=simple
 User={{ janus_user }}
 RuntimeDirectory={{ janus_user }}
 LogsDirectory={{ janus_user }}
@@ -15,6 +15,8 @@ ExecStart={{ janus_install_dir }}/bin/janus \
     --cwd-path={{ janus_install_dir }} \
     --configs-folder={{ janus_conf_dir }} \
     --log-file={{ janus_log_file }}
+Restart=on-abnormal
+LimitNOFILE=65536
 
 [Install]
 WantedBy=multi-user.target

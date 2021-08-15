@@ -2,10 +2,14 @@
 # defaults file for ansible-role-janus-gateway
 
 janus_build_extras:
-  websockets: true
-  rabbitmq: false
+  audiobridge: false
   mqtt: false
   nanomsg: false
+  rabbitmq: false
+  recordplay: false
+  sip: false
+  systemd: true
+  websockets: true
 
 janus_installed_versions:
   janus: null
@@ -67,6 +71,7 @@ janus_conf_var:
     candidates_timeout: 45
     reclaim_session_timeout: 0
     no_webrtc_encryption: false
+    ignore_unreachable_ice_server: true
   janus.transport.http:
     admin_base_path: "/admin"
     admin_http_port: 7088

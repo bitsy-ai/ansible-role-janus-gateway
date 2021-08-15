@@ -368,7 +368,7 @@ nat: {
 	# your machine is ready. Note that Linux distributions offer such directives.
 	# You could use the following directive in systemd: 'After=network-online.target'
 	# https://www.freedesktop.org/software/systemd/man/systemd.unit.html#Before=
-	#ignore_unreachable_ice_server = true
+	ignore_unreachable_ice_server = {{ janus_conf_var['janus']['ignore_unreachable_ice_server'] }}
 }
 
 # You can choose which of the available plugins should be
