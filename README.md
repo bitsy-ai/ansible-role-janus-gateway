@@ -1,7 +1,7 @@
 Ansible Role: Janus Gateway
 =========
 
-![Molecule](https://img.shields.io/github/workflow/status/bitsy-ai/ansible-role-janus-gateway/Molecule)
+[![Molecule](https://img.shields.io/github/workflow/status/bitsy-ai/ansible-role-janus-gateway/Molecule)](https://github.com/bitsy-ai/ansible-role-janus-gateway/actions/workflows/test.yml)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/bitsy-ai/ansible-role-janus-gateway)
 ![GitHub last commit](https://img.shields.io/github/last-commit/bitsy-ai/ansible-role-janus-gateway)
 
