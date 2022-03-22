@@ -101,3 +101,4 @@ janus_conf_template:
   janus.transport.http.jcfg: janus.transport.http.jcfg
   janus.transport.pfunix.jcfg: janus.transport.pfunix.jcfg
   janus.transport.websockets.jcfg: janus.transport.websockets.jcfg
+  janus.plugin.ustreamer.jcfg: janus.plugin.ustreamer.jcfg

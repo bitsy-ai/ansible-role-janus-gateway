@@ -1,0 +1,5 @@
+# {{ ansible_managed }}
+
+memsink: {
+	object = "{{ ustreamer_h264_sink | default("janus::ustreamer::h264") }}"
+}
