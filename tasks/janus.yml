@@ -16,10 +16,10 @@
   tags:
     janus-gateway
 
-# - name: Install usrsctp
-#   import_tasks: usrsctp.yml
-#   tags:
-#     janus-gateway
+- name: Install usrsctp
+  import_tasks: usrsctp.yml
+  tags:
+    janus-gateway
 
 - name: Install libwebsockets
   import_tasks: libwebsockets.yml
